@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>結果</title>
+</head>
+<body>
+    <h1>ビデオ分析結果</h1>
+
+    <!-- 動画を再生するエリア -->
+    <video width="640" height="480" controls>
+        <source src="{{ video_url }}" type="video/mp4">
+        お使いのブラウザは動画をサポートしていません。
+    </video>
+
+    <h2>角度結果</h2>
+    <p>最大肘角度: {{ max_elbow_angle }}°</p>
+    <p>最大膝角度: {{ max_knee_angle }}°</p>
+    <p>以前の最大肘角度: {{ previous_max_elbow }}°</p>
+    <p>以前の最大膝角度: {{ previous_max_knee }}°</p>
+    <p>3/4フェーズの平均角度: {{ average_three_quarter_angle }}°</p>
+
+    <a href="{{ url_for('index') }}">別の動画をアップロード</a>
+</body>
+</html>
