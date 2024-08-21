@@ -35,31 +35,8 @@ def is_release_moment(landmarks, prev_wrist_y):
 def is_straight_line(hip, knee, ankle):
     return np.abs(np.cross(np.subtract(knee, hip), np.subtract(ankle, hip)))
 
-@app.route('/')
-def index():
-    return render_template('index.html')
-
-@app.route('/upload', methods=['POST'])
-def upload_video():
-    
-    if 'file' not in request.files:
-        return redirect(request.url)
-    
-    file = request.files['file']
-    if file.filename == '':
-        return redirect(request.url)
-    
-    # ファイル名の処理
-    timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
-    filename = secure_filename(file.filename)
-    filename_time = f"{timestamp}_{filename}"
-    filepath = os.path.join('static', filename_time)
-    file.save(filepath)
-
-    result_filename = f"result_{timestamp}_{filename}"
-    result_filepath = os.path.join('static', result_filename)
-
-    # ビデオ処理
+# ビデオ処理関数
+def video_processing_function(filepath, result_filepath):
     cap = cv2.VideoCapture(filepath)
     fourcc = cv2.VideoWriter_fourcc(*'H264')
     width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
@@ -145,9 +122,51 @@ def upload_video():
     cap.release()
     result.release()
 
+    return elbow_angles, knee_angles, three_quarter_angles
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/upload', methods=['POST'])
+def upload_video():
+    
+    if 'file1' not in request.files:
+        return redirect(request.url)
+    if 'file2' not in request.files:
+        return redirect(request.url)
+    
+    file1 = request.files['file1']
+    file2 = request.files['file2']
+    if file1.filename == '':
+        return redirect(request.url)
+    if file2.filename == '':
+        return redirect(request.url)
+
+    # ファイル名の処理
+    timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+    filename1 = secure_filename(file1.filename)
+    filename1_time = f"{timestamp}_{filename1}"
+    filepath1 = os.path.join('static', filename1_time)
+    file1.save(filepath1)
+
+    filename2 = secure_filename(file2.filename)
+    filename2_time = f"{timestamp}_{filename2}"
+    filepath2 = os.path.join('static', filename2_time)
+    file2.save(filepath2)
+
+    result_filename1 = f"result1_{timestamp}_{filename1}"
+    result_filepath1 = os.path.join('static', result_filename1)
+
+    result_filename2 = f"result2_{timestamp}_{filename2}"
+    result_filepath2 = os.path.join('static', result_filename2)
+
+    elbow_angles1, knee_angles1, three_quarter_angles1 = video_processing_function(filepath1, result_filepath1)
+    elbow_angles2, knee_angles2, three_quarter_angles2 = video_processing_function(filepath2, result_filepath2)
+
     # 動画の数が増え過ぎないように処理
-    if os.path.exists(filepath):
-        os.remove(filepath)
+    if os.path.exists(filepath1):
+        os.remove(filepath1)
 
     def remove_old_files(directory, keep_latest=4):
         files = sorted(os.listdir(directory), key=lambda x: os.path.getctime(os.path.join(directory, x)))
@@ -158,38 +177,31 @@ def upload_video():
     remove_old_files('static')
 
     # 3/4フェーズの平均角度を計算
-    if three_quarter_angles:
-        average_three_quarter_angle = np.mean(three_quarter_angles)
+    if three_quarter_angles1:
+        average_three_quarter_angle1 = np.mean(three_quarter_angles1)
     else:
-        average_three_quarter_angle = None
+        average_three_quarter_angle1 = None
+    if three_quarter_angles2:
+        average_three_quarter_angle2 = np.mean(three_quarter_angles2)
+    else:
+        average_three_quarter_angle2 = None
 
     # 最大角度を計算
-    max_elbow_angle = max([angle for angle in elbow_angles])
-    max_knee_angle = max([angle for angle in knee_angles])
-
-    # 最大値を比較
-    conn = sqlite3.connect('angles.db')
-    c = conn.cursor()
-    c.execute('SELECT MAX(elbow_angle), MAX(knee_angle) FROM angles')
-    row = c.fetchone()
-    previous_max_elbow = row[0] if row[0] else 0
-    previous_max_knee = row[1] if row[1] else 0
-    
-    if max_elbow_angle > previous_max_elbow or max_knee_angle > previous_max_knee:
-        c.execute('INSERT INTO angles (elbow_angle, knee_angle) VALUES (?, ?)', 
-                  (max_elbow_angle, max_knee_angle))
-        conn.commit()
-    
-    conn.close()
+    max_elbow_angle1 = max([angle for angle in elbow_angles1])
+    max_knee_angle1 = max([angle for angle in knee_angles1])
+    max_elbow_angle2 = max([angle for angle in elbow_angles2])
+    max_knee_angle2 = max([angle for angle in knee_angles2])
 
     # 結果
     return render_template('result.html', 
-                           video_url=url_for('static', filename=result_filename), 
-                           max_elbow_angle=max_elbow_angle,
-                           max_knee_angle=max_knee_angle,
-                           previous_max_elbow=previous_max_elbow,
-                           previous_max_knee=previous_max_knee,
-                           average_three_quarter_angle=average_three_quarter_angle)
+                           video_url1=url_for('static', filename=result_filename1), 
+                           video_url2=url_for('static', filename=result_filename2),
+                           max_elbow_angle1=max_elbow_angle1,
+                           max_knee_angle1=max_knee_angle1,
+                           max_elbow_angle2=max_elbow_angle2,
+                           max_knee_angle2=max_knee_angle2,
+                           average_three_quarter_angle1=average_three_quarter_angle1,
+                           average_three_quarter_angle2=average_three_quarter_angle2)
 
 if __name__ == "__main__":
     app.run(debug=True)
