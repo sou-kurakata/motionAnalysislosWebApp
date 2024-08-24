@@ -1,0 +1,291 @@
+/* ベースのスタイル */
+body {
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    background-color: #f9f9f9; 
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+.container {
+    width: 80%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+/* index */
+/* ヘッダーのスタイル */
+header {
+    text-align: center;
+    padding: 50px 0;
+    background-image: url(../images/baseball_top.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-bottom: 1px solid #e2e2e2;
+    height: 100vh;
+}
+
+/* ナビゲーション */
+nav {
+    width: 500px;
+    margin-right: auto;
+}
+nav ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #fd4037;
+    font-size: 1.2em;
+    padding: 10px 20px;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: #ff7043; /* 優しいオレンジ系 */
+}
+
+/* セクションのスタイル */
+section {
+    margin: 50px 0;
+    text-align: center;
+}
+
+section h2 {
+    font-size: 1.4em;
+    font-weight: 300;
+    color: #222;
+    text-align: left;
+}
+
+section p {
+    font-size: 0.9em;
+    color: #222;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.concept {
+    width: 90%;
+    margin: 150px auto;
+    display: flex;
+}
+
+.concept_title {
+    margin-right: 27.34375vw;
+}
+
+.concept_text {
+    text-align: left;
+}
+
+.how_to {
+    width: 90%;
+    margin: 150px auto;
+}
+
+.how_to_title {
+    text-align: left;
+}
+
+.how_to_img {
+    max-width: 60%;
+    height: auto;
+    margin-right: 40px;
+}
+
+.how_to_inner {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.how_to_text {
+    text-align: left;
+}
+.upload_link {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #f9f9f9;
+    color: #222;
+    border-radius: 5px;
+    border: 2px solid #222;
+    text-decoration: none;
+}
+
+.upload_link:hover {
+    background-color: #222;
+    color: #f9f9f9;
+}
+/* フッターのスタイル */
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #ffffff;
+    border-top: 1px solid #e2e2e2;
+    color: #777;
+}
+
+footer p {
+    margin: 0;
+}
+
+/* app */
+.app_wrapper {
+    background-image: url(../images/baseball_top.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    position: relative;
+}
+
+.app_inner {
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-right-color: rgba(255, 255, 255, 0.2);
+    border-bottom-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    width: 40%;
+    position: absolute;
+    top: 20%;
+    left: 6%;
+    padding: 40px;
+}
+
+.app_title {
+    color: #fd4037;
+    text-align: center;
+}
+
+.form-group {
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.app_form {
+    text-align: center;
+}
+
+.form-control-file {
+    text-align: center;
+}
+
+/* レスポンシブスタイル */
+@media (max-width: 1024px) {
+    .how_to_img {
+        max-width: 50%; 
+        height: auto;
+    }
+}
+@media (max-width: 768px) {
+    /* ヘッダー */
+    header {
+        height: auto; 
+        padding: 20px 0;
+    }
+
+    /* ナビゲーション */
+    nav ul {
+        flex-direction: column;
+        padding: 0;
+    }
+
+    nav ul li {
+        margin: 10px 0;
+    }
+
+    /* コンセプトセクション */
+    .concept {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .concept_title, 
+    .concept_text {
+        margin-right: 0;
+        text-align: center;
+    }
+
+    .concept_text {
+        max-width: 90%;
+    }
+
+    /* How toセクション */
+    .how_to_title {
+        text-align: center;
+    }
+
+    .how_to_inner {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .how_to_img {
+        max-width: 70%;
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+
+    .how_to_text {
+        max-width: 90%;
+        text-align: center;
+    }
+
+    /* フッター */
+    footer p {
+        font-size: 0.9em;
+    }
+
+    /* ボタン */
+    .upload_link {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 10px 20px;
+        background-color: #f9f9f9;
+        color: #222;
+        border-radius: 5px;
+        border: 2px solid #222;
+        text-decoration: none;
+    }
+
+    .upload_link:hover {
+        background-color: #222;
+        color: #f9f9f9;
+    }
+
+    /* upload */
+    .app_inner {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 80%; 
+        padding: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    /* スマートフォン向けのさらに小さな画面対応 */
+    .how_to_img {
+        max-width: 90%; 
+        height: auto;
+        margin-bottom: 15px;
+    }
+
+    .how_to_text {
+        text-align: center;
+        font-size: 0.85em; 
+    }
+}

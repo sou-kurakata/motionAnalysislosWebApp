@@ -4,13 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Video Upload</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <h1>Upload your video</h1>
-    <form action="{{ url_for('upload_video') }}" method="post" enctype="multipart/form-data">
-        <input type="file" name="file1" required>
-        <input type="file" name="file2" required>
-        <input type="submit" value="Upload">
-    </form>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#concept">Concept</a></li>
+                <li><a href="#how_to">How to use</a></li>
+                <li><a href="{{ url_for('upload_movie') }}">upload</a></li>
+            </ul>
+        </nav>
+    </header>
+    <section class="concept" id="concept">
+        <h2 class="concept_title">Concept</h2>
+        <p class="concept_text">
+            このサイトは「高校生の怪我を少しでも減らす」という強い思いから生まれました。スポーツや日常生活での怪我は、若い世代にとって大きな問題です。特に高校生は成長過程にあり、適切なフォームやテクニックを学ぶことが怪我の予防に繋がります。
+            <br><br>
+            このサイトでは、動画を使って動作分析を行い、怪我のリスクを減少させるための支援を提供します。私たちのシステムは、姿勢や動作を精密に分析し、肘や膝の角度などの重要な指標を測定することで、怪我のリスクを低減します。動画のアップロードと解析を通じて、より安全で健康的なスポーツライフをサポートすることを目指しています。
+        </p>
+    </section>
+
+    <section class="how_to" id="how_to">
+        <h2 class="how_to_title">How to use</h2>
+        <div class="how_to_inner">
+            <img src="../static/images/sannkou1.png" alt="参考画像" class="how_to_img">
+            <p class="how_to_text">
+                肘、膝、肩などの関節部のランドマークをドットでマークすることができます。これによりフォームをより視覚的に感じ取りやすくなります。次に重要な投球のフェーズで、関節の動きを分析し、簡単なグラフィックで表示します。
+                <br>
+                <br>
+                このツールを使うことで、理想のフォームや過去の自分と比較し、より効率的に練習ができるようになります。
+                <br>
+                <br>
+                <a href="{{ url_for('upload_movie') }}" class="upload_link">動画をアップロードする→</a>
+            </p>
+        </div>
+    </section>
+
+    <footer>
+        <small><p>&copy; 2024 soukurakata All rights reserved.</p></small>
+    </footer>
 </body>
 </html>

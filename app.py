@@ -4,7 +4,6 @@ import mediapipe as mp
 import numpy as np
 import os
 from werkzeug.utils import secure_filename
-import sqlite3
 from datetime import datetime
 
 app = Flask(__name__)
@@ -128,6 +127,10 @@ def video_processing_function(filepath, result_filepath):
 def index():
     return render_template('index.html')
 
+@app.route('/upload_movie')
+def upload_movie():
+    return render_template('uploadMovie.html')
+
 @app.route('/upload', methods=['POST'])
 def upload_video():
     
@@ -147,19 +150,20 @@ def upload_video():
     timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
     filename1 = secure_filename(file1.filename)
     filename1_time = f"{timestamp}_{filename1}"
-    filepath1 = os.path.join('static', filename1_time)
+    videos_folder = os.path.join('static', 'videos')
+    filepath1 = os.path.join(videos_folder, filename1_time)
     file1.save(filepath1)
 
     filename2 = secure_filename(file2.filename)
     filename2_time = f"{timestamp}_{filename2}"
-    filepath2 = os.path.join('static', filename2_time)
+    filepath2 = os.path.join(videos_folder, filename2_time)
     file2.save(filepath2)
 
     result_filename1 = f"result1_{timestamp}_{filename1}"
-    result_filepath1 = os.path.join('static', result_filename1)
+    result_filepath1 = os.path.join(videos_folder, result_filename1)
 
     result_filename2 = f"result2_{timestamp}_{filename2}"
-    result_filepath2 = os.path.join('static', result_filename2)
+    result_filepath2 = os.path.join(videos_folder, result_filename2)
 
     elbow_angles1, knee_angles1, three_quarter_angles1 = video_processing_function(filepath1, result_filepath1)
     elbow_angles2, knee_angles2, three_quarter_angles2 = video_processing_function(filepath2, result_filepath2)
@@ -174,7 +178,7 @@ def upload_video():
             for file in files[:-keep_latest]:
                 os.remove(os.path.join(directory, file))
 
-    remove_old_files('static')
+    remove_old_files('static/videos')
 
     # 3/4フェーズの平均角度を計算
     if three_quarter_angles1:
@@ -194,8 +198,8 @@ def upload_video():
 
     # 結果
     return render_template('result.html', 
-                           video_url1=url_for('static', filename=result_filename1), 
-                           video_url2=url_for('static', filename=result_filename2),
+                           video_url1=url_for('static', filename=f'videos/{result_filename1}'), 
+                           video_url2=url_for('static', filename=f'videos/{result_filename2}'),
                            max_elbow_angle1=max_elbow_angle1,
                            max_knee_angle1=max_knee_angle1,
                            max_elbow_angle2=max_elbow_angle2,
