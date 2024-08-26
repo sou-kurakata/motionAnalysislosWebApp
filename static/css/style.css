@@ -162,6 +162,20 @@ footer p {
     position: absolute;
     top: 20%;
     left: 6%;
+    padding: 30px;
+}
+
+.app__inner {
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(188, 59, 59, 0.4);
+    border-right-color: rgba(255, 255, 255, 0.2);
+    border-bottom-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    width: 80%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     padding: 40px;
 }
 
@@ -181,6 +195,29 @@ footer p {
 
 .form-control-file {
     text-align: center;
+}
+
+.app_result {
+    display: flex;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.app_result_inner {
+    text-align: center;
+}
+
+.result_video {
+    width: 90%;
+}
+
+.ex {
+    font-size: 0.75rem;
+}
+
+.explain {
+    width: 90%;
+    margin: 0 auto;
 }
 
 /* レスポンシブスタイル */

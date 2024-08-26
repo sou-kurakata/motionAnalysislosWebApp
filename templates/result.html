@@ -4,41 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>結果</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
-    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <h1 class="my-4 text-center">比較結果</h1>
-        <div class="row">
-            <div class="col-md-6">
-                <h3>動画1</h3>
-                <video width="100%" controls>
-                    <source src="{{ video_url1 }}" type="video/mp4">
-                    お使いのブラウザでは動画タグがサポートされていません。
-                </video>
-                <p>最大肘角度: {{ max_elbow_angle1 }}°</p>
-                <p>最大膝角度: {{ max_knee_angle1 }}°</p>
-                <p>3/4フェーズの平均角度: {{ average_three_quarter_angle1 }}°</p>
-            </div>
-            <div class="col-md-6">
-                <h3>動画2</h3>
-                <video width="100%" controls>
-                    <source src="{{ video_url2 }}" type="video/mp4">
-                    お使いのブラウザでは動画タグがサポートされていません。
-                </video>
-                <p>最大肘角度: {{ max_elbow_angle2 }}°</p>
-                <p>最大膝角度: {{ max_knee_angle2 }}°</p>
-                <p>3/4フェーズの平均角度: {{ average_three_quarter_angle2 }}°</p>
+    <div class="app_wrapper">
+        <div class="app__inner">
+            <h1 class="app_title">Result</h1>
+            <div class="app_result">
+                <div class="app_result_inner">
+                    <h3>動画1</h3>
+                    <video class="result_video" controls>
+                        <source src="{{ video_url1 }}" type="video/mp4">
+                        お使いのブラウザでは動画タグがサポートされていません。
+                    </video>
+                    <div class="explain">
+                        <p>最大肘角度: {{ max_elbow_angle1 }}°</p>
+                        <p>最大膝角度: {{ max_knee_angle1 }}°</p>
+                        <p class="ex">リリース過程における肘と膝の最大角度は、効率的なエネルギー伝達の指標となります。これらの角度が180°に近づくほど、地面から得られる力をボールに効率よく伝えることができ、投球の威力や正確性が向上します。</p>
+                        <p>3/4フェーズの平均角度: {{ average_three_quarter_angle1 }}°</p>
+                        <p class="ex">この指標は、体重移動のスムーズさを示します。前足が着地時の3/4に達した時点での値を測定します。角度が180°に近づくほど、よりスムーズに体重が移動していることを意味し、流れるような動作が可能になります。</p>
+                    </div>
+                </div>
+                <div class="app_result_inner">
+                    <h3>動画2</h3>
+                    <video class="result_video" controls>
+                        <source src="{{ video_url1 }}" type="video/mp4">
+                        お使いのブラウザでは動画タグがサポートされていません。
+                    </video>
+                    <div class="explain">
+                        <p>最大肘角度: {{ max_elbow_angle1 }}°</p>
+                        <p>最大膝角度: {{ max_knee_angle1 }}°</p>
+                        <p class="ex">リリース過程における肘と膝の最大角度は、効率的なエネルギー伝達の指標となります。これらの角度が180°に近づくほど、地面から得られる力をボールに効率よく伝えることができ、投球の威力や正確性が向上します。</p>
+                        <p>3/4フェーズの平均角度: {{ average_three_quarter_angle1 }}°</p>
+                        <p class="ex">この指標は、体重移動のスムーズさを示します。前足が着地時の3/4に達した時点での値を測定します。角度が180°に近づくほど、よりスムーズに体重が移動していることを意味し、流れるような動作が可能になります。</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
-    <!-- Bootstrap JS and dependencies -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
